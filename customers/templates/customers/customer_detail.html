@@ -1,0 +1,24 @@
+<!-- customers/templates/customers/customer_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Customer Details</h1>
+        <dl class="row">
+            <dt class="col-sm-3">Name:</dt>
+            <dd class="col-sm-9">{{ customer.name }}</dd>
+            <dt class="col-sm-3">Email:</dt>
+            <dd class="col-sm-9">{{ customer.email }}</dd>
+            <dt class="col-sm-3">Phone:</dt>
+            <dd class="col-sm-9">{{ customer.phone }}</dd>
+        </dl>
+        <a href="{% url 'customer_list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</body>
+</html>

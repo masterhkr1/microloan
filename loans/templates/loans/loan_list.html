@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan List</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Loan List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Amount</th>
+                    <th>Interest Rate</th>
+                    <th>Start Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loans %}
+                <tr>
+                    <td>{{ loan.id }}</td>
+                    <td>{{ loan.amount }}</td>
+                    <td>{{ loan.interest_rate }}</td>
+                    <td>{{ loan.start_date }}</td>
+                    <td>
+                        <a href="{% url 'loan-detail' loan.id %}" class="btn btn-info">Details</a>
+                        <a href="{% url 'loan-update' loan.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'loan-delete' loan.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'loan-create' %}" class="btn btn-primary">Add New Loan</a>
+    </div>
+</body>
+</html>

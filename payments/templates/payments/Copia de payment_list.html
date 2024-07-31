@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Payments</h2>
+<button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addPaymentModal">Add Payment</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Loan</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="paymentTableBody">
+        <!-- Payment data will be appended here -->
+    </tbody>
+</table>
+
+<!-- Add Payment Modal -->
+<div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addPaymentForm">
+                    <div class="form-group">
+                        <label for="loan">Loan</label>
+                        <input type="text" class="form-control" id="loan" name="loan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" class="form-control" id="amount" name="amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Fetch payments and populate table
+        $.ajax({
+            url: '/payments/api/',
+            method: 'GET',
+            success: function(data) {
+                data.forEach(payment => {
+                    $('#paymentTableBody').append(`
+                        <tr>
+                            <td>${payment.loan}</td>
+                            <td>${payment.amount}</td>
+                            <td>${payment.date}</td>
+                            <td>
+                                <a href="/payments/${payment.id}/" class="btn btn-info btn-sm">View</a>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        });
+
+        // Add payment
+        $('#addPaymentForm').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/payments/api/',
+                method: 'POST',
+                data: {
+                    loan: $('#loan').val(),
+                    amount: $('#amount').val(),
+                    date: $('#date').val()
+                },
+                success: function(payment) {
+                    $('#paymentTableBody').append(`
+                        <tr>
+                            <td>${payment.loan}</td>
+                            <td>${payment.amount}</td>
+                            <td>${payment.date}</td>
+                            <td>
+                                <a href="/payments/${payment.id}/" class="btn btn-info btn-sm">View</a>
+                            </td>
+                        </tr>
+                    `);
+                    $('#addPaymentModal').modal('hide');
+                    $('#addPaymentForm')[0].reset();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
