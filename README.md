@@ -12,7 +12,7 @@ Este proyecto es un sistema de gestión de créditos y pagos desarrollado en Dja
 
 1. Clona el repositorio:
     ```sh
-    git clone git@github.com:tu_usuario/tu_repositorio.git
+    (https://github.com/masterhkr1/microloan.git)
     ```
 2. Navega al directorio del proyecto:
     ```sh
